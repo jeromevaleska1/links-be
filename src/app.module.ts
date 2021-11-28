@@ -17,6 +17,7 @@ if(  process.env.NODE_ENV && process.env.NODE_ENV === 'production'){
     secure: true  
   }
 }
+console.log({cookie})
 @Module({
   imports: [
     ConfigModule.forRoot({
