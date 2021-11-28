@@ -24,9 +24,8 @@ export const config = async ():Promise<IAppConfig> => {
   // for heroku deployment
   if(process.env.PGDATABASE) {
     options['database'] = process.env.PGDATABASE
-    options['ssl'] = true
+    options['ssl'] = {rejectUnauthorized: false}
   } 
-    console.log(process.env)
     const client = new Client(options)
     await client.connect()
     await client.query(createTableText)
