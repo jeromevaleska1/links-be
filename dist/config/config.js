@@ -13,12 +13,14 @@ CREATE  TABLE if not exists urls(
 `;
 const config = async () => {
     var _a, _b, _c, _d;
-    const client = new pg_1.Client({
-        host: (_a = process.env.DB_HOST) !== null && _a !== void 0 ? _a : 'localhost',
-        port: (_b = +process.env.DB_PORT) !== null && _b !== void 0 ? _b : 5432,
-        password: (_c = process.env.DB_PASS) !== null && _c !== void 0 ? _c : 'password',
-        user: (_d = process.env.DB_USER) !== null && _d !== void 0 ? _d : 'postgres'
-    });
+    const options = {
+        host: (_a = process.env.PGHOST) !== null && _a !== void 0 ? _a : 'localhost',
+        port: (_b = +process.env.PGPORT) !== null && _b !== void 0 ? _b : 5432,
+        password: (_c = process.env.PGPASSWORD) !== null && _c !== void 0 ? _c : 'password',
+        user: (_d = process.env.PGUSER) !== null && _d !== void 0 ? _d : 'postgres',
+    };
+    process.env.PGDATABASE && (options['database'] = process.env.PGDATABASE);
+    const client = new pg_1.Client(options);
     await client.connect();
     await client.query(createTableText);
     return {

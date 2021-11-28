@@ -4,7 +4,6 @@ interface IAppConfig{
     pgClient: Client,
     baseUrl: string
 }
-
 const createTableText = `
 CREATE  TABLE if not exists urls(
   ID  SERIAL PRIMARY KEY,
@@ -16,12 +15,15 @@ CREATE  TABLE if not exists urls(
 `
 
 export const config = async ():Promise<IAppConfig> => {
-    const client = new Client({
-        host: process.env.DB_HOST ?? 'localhost',
-        port: +process.env.DB_PORT ?? 5432,
-        password: process.env.DB_PASS ?? 'password',
-        user: process.env.DB_USER ?? 'postgres'
-    })
+    const options = {
+      host: process.env.PGHOST ?? 'localhost',
+      port: +process.env.PGPORT ?? 5432,
+      password: process.env.PGPASSWORD ?? 'password',
+      user: process.env.PGUSER ?? 'postgres',
+  }
+  process.env.PGDATABASE && (options['database'] = process.env.PGDATABASE)
+
+    const client = new Client(options)
     await client.connect()
     await client.query(createTableText)
     
