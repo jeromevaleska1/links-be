@@ -21,12 +21,9 @@ const config = async () => {
     };
     if (process.env.PGDATABASE) {
         options['database'] = process.env.PGDATABASE;
-        options['ssl'] = true;
+        options['ssl'] = { rejectUnauthorized: false };
     }
-    const client = new pg_1.Client({ connectionString: 'postgres://fimorldtmnsotx:6f2346548a6e49b1a25f39ba0de86def8dd7e20f13fba6db03378536f47016e9@ec2-34-242-89-204.eu-west-1.compute.amazonaws.com:5432/d6rr6f60lk8nl9',
-        ssl: {
-            rejectUnauthorized: false
-        } });
+    const client = new pg_1.Client(options);
     await client.connect();
     await client.query(createTableText);
     return {
