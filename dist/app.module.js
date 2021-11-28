@@ -26,7 +26,9 @@ AppModule = __decorate([
                 load: [config_2.config],
             }),
             nestjs_session_1.SessionModule.forRoot({
-                session: { secret: 'keyboard cat' },
+                session: { secret: 'keyboard cat', cookie: {
+                        sameSite: 'none', httpOnly: true, secure: true
+                    } },
             }),
         ],
         controllers: [app_controller_1.AppController, links_controller_1.LinksController],

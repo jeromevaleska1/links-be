@@ -17,7 +17,8 @@ import { PgService } from './pg/pg.service';
       load: [config],
     }),
     SessionModule.forRoot({
-      session: { secret: 'keyboard cat' },
+      session: { secret: 'keyboard cat', cookie: {
+        sameSite: 'none', httpOnly: true, secure: true  }},
     }),
   ],
   controllers: [AppController, LinksController],
