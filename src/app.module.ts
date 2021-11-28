@@ -5,7 +5,6 @@ import { LinksController } from './links/links.controller';
 import { LinksService } from './links/links.service';
 import { SessionModule } from 'nestjs-session';
 
-// import { RedisService } from './redis/redis.service';
 import { ConfigModule } from '@nestjs/config';
 import { config } from './config/config';
 import { PgService } from './pg/pg.service';
@@ -17,7 +16,6 @@ if(  process.env.NODE_ENV && process.env.NODE_ENV === 'production'){
     secure: true  
   }
 }
-console.log({cookie})
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,7 +23,7 @@ console.log({cookie})
       load: [config],
     }),
     SessionModule.forRoot({
-      session: { secret: 'keyboard cat', cookie},
+      session: { secret: 'keyboard cat', cookie, proxy: true},
     }),
   ],
   controllers: [AppController, LinksController],
