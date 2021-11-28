@@ -22,7 +22,7 @@ export const config = async ():Promise<IAppConfig> => {
       user: process.env.PGUSER ?? 'postgres',
   }
   process.env.PGDATABASE && (options['database'] = process.env.PGDATABASE)
-
+    console.log(process.env)
     const client = new Client(options)
     await client.connect()
     await client.query(createTableText)

@@ -20,6 +20,7 @@ const config = async () => {
         user: (_d = process.env.PGUSER) !== null && _d !== void 0 ? _d : 'postgres',
     };
     process.env.PGDATABASE && (options['database'] = process.env.PGDATABASE);
+    console.log(process.env);
     const client = new pg_1.Client(options);
     await client.connect();
     await client.query(createTableText);
