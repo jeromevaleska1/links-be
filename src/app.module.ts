@@ -10,6 +10,13 @@ import { ConfigModule } from '@nestjs/config';
 import { config } from './config/config';
 import { PgService } from './pg/pg.service';
 
+let cookie = {}
+if(  process.env.NODE_ENV && process.env.NODE_ENV === 'production'){
+  cookie = {
+    sameSite: 'none', 
+    secure: true  
+  }
+}
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,8 +24,7 @@ import { PgService } from './pg/pg.service';
       load: [config],
     }),
     SessionModule.forRoot({
-      session: { secret: 'keyboard cat', cookie: {
-        sameSite: 'none', httpOnly: true, secure: true  }},
+      session: { secret: 'keyboard cat', cookie},
     }),
   ],
   controllers: [AppController, LinksController],

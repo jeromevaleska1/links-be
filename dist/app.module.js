@@ -16,6 +16,13 @@ const nestjs_session_1 = require("nestjs-session");
 const config_1 = require("@nestjs/config");
 const config_2 = require("./config/config");
 const pg_service_1 = require("./pg/pg.service");
+let cookie = {};
+if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
+    cookie = {
+        sameSite: 'none',
+        secure: true
+    };
+}
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,9 +33,7 @@ AppModule = __decorate([
                 load: [config_2.config],
             }),
             nestjs_session_1.SessionModule.forRoot({
-                session: { secret: 'keyboard cat', cookie: {
-                        sameSite: 'none', httpOnly: true, secure: true
-                    } },
+                session: { secret: 'keyboard cat', cookie },
             }),
         ],
         controllers: [app_controller_1.AppController, links_controller_1.LinksController],
