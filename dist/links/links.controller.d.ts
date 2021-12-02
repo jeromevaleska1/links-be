@@ -6,6 +6,16 @@ interface RequestWithSession extends Request {
 export declare class GetLinkDTO {
     url: string;
 }
+export declare class GetLinkResponseDto {
+    link: string;
+    views: number;
+}
+export declare class GetUserDataResponseDto {
+    session: string;
+    views: number;
+    url: string;
+    shorturl: string;
+}
 export declare class LinksController {
     private linksService;
     constructor(linksService: LinksService);

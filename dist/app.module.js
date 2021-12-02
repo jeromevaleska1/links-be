@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const links_controller_1 = require("./links/links.controller");
 const links_service_1 = require("./links/links.service");
@@ -33,10 +32,12 @@ AppModule = __decorate([
                 load: [config_2.config],
             }),
             nestjs_session_1.SessionModule.forRoot({
-                session: { secret: 'keyboard cat', cookie },
+                session: { secret: 'keyboard cat', cookie, proxy: true },
             }),
         ],
-        controllers: [app_controller_1.AppController, links_controller_1.LinksController],
+        controllers: [
+            links_controller_1.LinksController
+        ],
         providers: [app_service_1.AppService, links_service_1.LinksService, pg_service_1.PgService, pg_service_1.PgService],
     })
 ], AppModule);
