@@ -8,13 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
 const links_controller_1 = require("./links/links.controller");
 const links_service_1 = require("./links/links.service");
 const nestjs_session_1 = require("nestjs-session");
 const config_1 = require("@nestjs/config");
 const config_2 = require("./config/config");
 const pg_service_1 = require("./pg/pg.service");
+const url_service_1 = require("./url/url.service");
 let cookie = {};
 if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
     cookie = {
@@ -38,7 +38,7 @@ AppModule = __decorate([
         controllers: [
             links_controller_1.LinksController
         ],
-        providers: [app_service_1.AppService, links_service_1.LinksService, pg_service_1.PgService, pg_service_1.PgService],
+        providers: [links_service_1.LinksService, pg_service_1.PgService, pg_service_1.PgService, url_service_1.UrlService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

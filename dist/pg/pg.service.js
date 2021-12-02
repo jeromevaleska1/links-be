@@ -20,9 +20,7 @@ let PgService = class PgService {
         this.client = this.config.get('pgClient');
     }
     async save({ sessionId, longUrl, shortUrl, views }) {
-        const res = this.client.query(insertText, [sessionId, views, longUrl, shortUrl]);
-        console.log({ res });
-        return res;
+        return this.client.query(insertText, [sessionId, views, longUrl, shortUrl]);
     }
     async getUrls(sessionId) {
         const { rows } = await this.client.query(selectText, [sessionId]);

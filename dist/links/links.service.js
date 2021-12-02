@@ -12,16 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinksService = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const crypto = require("crypto");
 const pg_service_1 = require("../pg/pg.service");
+const url_service_1 = require("../url/url.service");
 let LinksService = class LinksService {
-    constructor(pg, config) {
+    constructor(pg, config, urlService) {
         this.pg = pg;
         this.config = config;
+        this.urlService = urlService;
     }
     async getLink({ sessionId, longUrl, views }) {
         const BASE_URL = this.config.get('baseUrl');
-        const shortUrl = `${BASE_URL}/${crypto.randomBytes(20).toString('hex').substr(0, 5)}`;
+        const shortUrl = `${BASE_URL}/${this.urlService.getShortUrl()}`;
         await this.pg.save({ sessionId, views, longUrl, shortUrl });
         return shortUrl;
     }
@@ -31,7 +32,9 @@ let LinksService = class LinksService {
 };
 LinksService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [pg_service_1.PgService, config_1.ConfigService])
+    __metadata("design:paramtypes", [pg_service_1.PgService,
+        config_1.ConfigService,
+        url_service_1.UrlService])
 ], LinksService);
 exports.LinksService = LinksService;
 //# sourceMappingURL=links.service.js.map
